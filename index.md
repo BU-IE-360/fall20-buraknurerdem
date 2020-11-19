@@ -1,4 +1,4 @@
-# Example Progress Journal
+# Progress Journal
 
 ## Week 0 (September 19)
 
@@ -6,5 +6,5 @@
 
 ## Homework 1 (November 19, 2020)
 
-[Here](files/Hw1/IE360 Hw1.html)  is my homework1.
+[Here](files/Hw1/IE360 Hw1.html)  is my homework1.  
 [Here](files/Hw1/IE360 Hw1.ipynb)  is the .ipynb notebook file.
