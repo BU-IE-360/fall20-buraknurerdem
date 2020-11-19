@@ -6,5 +6,5 @@
 
 ## Homework 1 (November 19, 2020)
 
-[Here is my homework1.](files/Hw1/IE360 Hw1.html) 
-[And here is the .ipynb notebook file.](files/Hw1/IE360 Hw1.ipynb) 
+[Here](files/Hw1/IE360 Hw1.html)  is my homework1.
+[Here](files/Hw1/IE360 Hw1.ipynb)  is the .ipynb notebook file.
