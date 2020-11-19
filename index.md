@@ -7,4 +7,4 @@
 ## Homework 1 (November 19, 2020)
 
 [Here](files/Hw1/IE360 Hw1.html)  is my homework1.  
-[Here](files/Hw1/IE360 Hw1.ipynb)  is the .ipynb notebook file.
+[Click here](files/Hw1/IE360 Hw1.ipynb) to download the homework as a .ipynb notebook file.
