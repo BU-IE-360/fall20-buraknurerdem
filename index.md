@@ -8,3 +8,8 @@
 
 [Here](files/Hw1/IE360 Hw1.html)  is my homework1.  
 [Click here](files/Hw1/IE360 Hw1.ipynb) to download the homework as a .ipynb notebook file.
+
+## Homework 2 (December 8, 2020)
+
+[Here](files/Hw2/IE360 Hw2.html)  is my homework2.<br>
+[Click here](files/Hw2/IE360 Hw2.ipynb) to download the homework as a .ipynb notebook file.
