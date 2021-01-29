@@ -18,3 +18,8 @@
 
 [Here](files/Hw3/IE360 Hw3.html)  is my homework3.<br>
 [Click here](files/Hw3/IE360 Hw3.ipynb) to download the homework as a .ipynb notebook file.
+
+## Homework 4 (January 29, 2021)
+
+[Here](files/Hw4/IE360 Hw4.html)  is my homework3.<br>
+[Click here](files/Hw4/IE360 Hw4.ipynb) to download the homework as a .ipynb notebook file.
