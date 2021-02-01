@@ -21,5 +21,7 @@
 
 ## Homework 4 (January 29, 2021)
 
-[Here](files/Hw4/IE360 Hw4.html)  is my homework3.<br>
+[Here](files/Hw4/IE360 Hw4.html)  is my homework4.<br>
+[Here](files/Hw4/IE360 Hw4 Revised.html)  is my revised homework4 with corrected mistakes and small additions.<br>
 [Click here](files/Hw4/IE360 Hw4.ipynb) to download the homework as a .ipynb notebook file.
+[Click here](files/Hw4/IE360 Hw4 Revised.ipynb) to download the revised homework as a .ipynb notebook file.
