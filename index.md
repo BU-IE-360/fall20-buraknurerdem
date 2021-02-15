@@ -28,6 +28,6 @@
 
 ## Project (February 15, 2021)
 
-[Here](files/Project/IE360 Project Report.html) is the project report.
-[Click here](files/Project/IE360 Project Report.ipynb) to download project report as .ipynb notebook file.
+[Here](files/Project/IE360 Project Report.html) is the project report.<br>
+[Click here](files/Project/IE360 Project Report.ipynb) to download project report as .ipynb notebook file.<br>
 [Click here](files/Project/IE360 Group 11 - BurakNurErdem Project Code Alone.txt) to access only the code which was used for forecasting.
