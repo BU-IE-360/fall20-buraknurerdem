@@ -26,7 +26,7 @@
 [Click here](files/Hw4/IE360 Hw4.ipynb) to download the homework as a .ipynb notebook file.<br>
 [Click here](files/Hw4/IE360 Hw4 Revised.ipynb) to download the revised homework as a .ipynb notebook file.
 
-## Project
+## Project (February 15, 2021)
 
 [Here](files/Project/IE360 Project Report.html) is the project report.
 [Click here](files/Project/IE360 Project Report.ipynb) to download project report as .ipynb notebook file.
