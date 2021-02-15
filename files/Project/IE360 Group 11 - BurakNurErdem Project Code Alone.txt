@@ -1,0 +1,158 @@
+# IE 360 Project Code
+# Group 11
+# Burak Nur Erdem
+# 2021-02-15
+
+
+suppressWarnings(suppressMessages(library(data.table)))
+suppressWarnings(suppressMessages(library(forecast)))
+suppressWarnings(suppressMessages(library(lubridate)))
+
+consump = fread("RealTimeConsumptionProject.csv")
+colnames(consump) = c("Date", "Hour", "Consumption")
+
+
+consump[,Date:=as.Date(consump[,Date], format = "%d.%m.%Y")]
+consump[,Consumption:=gsub(',','',Consumption)]
+consump[,Consumption:=as.numeric(consump[,Consumption])]
+
+dailycons = consump[,list(DailyConsumption = sum(Consumption)), by = list(Date)]
+
+hourMultipliers = data.table(Hour = consump[Date == as.Date("2020-01-01"), Hour])
+
+hourMultipliers[,c("Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"):=0]
+
+# First loop is for the weekdays and the second is for the hours.
+for(j in 1:7){
+    for(i in 0:23){
+    hourMultipliers[i+1, j+1] = mean( consump[hm(Hour) == hm("00:00") + hours(i) & wday(Date) == j & Date >= as.Date("2021-01-11"), Consumption] / 
+                                         consump[wday(Date) == j & Date >= as.Date("2021-01-11"), sum(Consumption), by=Date]$V1 
+                                         )
+        # Changed the start date of the considerated data from 4 jan to 11 jan in 8 feb.
+    }
+}
+
+baselineFill = function(x){
+    x = as.Date(x)
+    dailycons[Date == x , DailyConsumption:=dailycons[Date == x - days(7) , DailyConsumption]]
+}
+
+# 2017 Ramazan Bayramı Value Correction
+baselineFill("2017-06-24")
+baselineFill("2017-06-25")
+baselineFill("2017-06-26")
+baselineFill("2017-06-27")
+
+# 2017 Kurban Bayramı Value Correction
+baselineFill("2017-08-31")
+baselineFill("2017-09-01")
+baselineFill("2017-09-02")
+baselineFill("2017-09-03")
+baselineFill("2017-09-04")
+
+# 2018 Ramazan Bayramı Value Correction
+baselineFill("2018-06-14")
+baselineFill("2018-06-15")
+baselineFill("2018-06-16")
+baselineFill("2018-06-17")
+
+# 2018 Kurban Bayramı Value Correction
+baselineFill("2018-08-18")
+baselineFill("2018-08-19")
+baselineFill("2018-08-20")
+baselineFill("2018-08-21")
+baselineFill("2018-08-22")
+baselineFill("2018-08-23")
+baselineFill("2018-08-24")
+baselineFill("2018-08-25")
+baselineFill("2018-08-26")
+
+# 2019 Ramazan Bayramı Value Correction
+baselineFill("2019-06-01")
+baselineFill("2019-06-02")
+baselineFill("2019-06-03")
+baselineFill("2019-06-04")
+baselineFill("2019-06-05")
+baselineFill("2019-06-06")
+baselineFill("2019-06-07")
+baselineFill("2019-06-08")
+baselineFill("2019-06-09")
+
+# 2019 Kurban Bayramı Value Correction
+baselineFill("2019-08-10")
+baselineFill("2019-08-11")
+baselineFill("2019-08-12")
+baselineFill("2019-08-13")
+baselineFill("2019-08-14")
+
+# 2020 Ramazan Bayramı Value Correction
+baselineFill("2020-05-22")
+baselineFill("2020-05-23")
+baselineFill("2020-05-24")
+baselineFill("2020-05-25")
+baselineFill("2020-05-26")
+baselineFill("2020-05-27")
+
+# 2020 Kurban Bayramı Value Correction
+baselineFill("2020-07-30")
+baselineFill("2020-07-31")
+baselineFill("2020-08-01")
+baselineFill("2020-08-02")
+baselineFill("2020-08-03")
+
+# Correction of some holidays and near days
+# I checked whether they had significantly low values.
+baselineFill("2017-05-01")
+baselineFill("2017-05-19")
+baselineFill("2017-05-20")
+baselineFill("2017-08-30")
+
+baselineFill("2018-01-01")
+baselineFill("2018-04-23")
+baselineFill("2018-04-30")
+baselineFill("2018-05-01")
+baselineFill("2018-08-30")
+baselineFill("2018-10-29")
+baselineFill("2018-12-31")
+
+baselineFill("2019-01-01")
+baselineFill("2019-04-23")
+baselineFill("2019-05-01")
+baselineFill("2019-07-15")
+baselineFill("2019-08-30")
+baselineFill("2019-08-31")
+baselineFill("2019-10-28")
+baselineFill("2019-10-29")
+baselineFill("2019-12-31")
+
+baselineFill("2020-01-01")
+baselineFill("2020-04-23")
+baselineFill("2020-05-18")
+baselineFill("2020-05-19")
+baselineFill("2020-05-01")
+
+baselineFill("2021-01-01")
+baselineFill("2021-01-02")
+
+lastDay = dailycons[.N, Date]
+
+
+a = ts(diff(dailycons$DailyConsumption, lag=7), frequency = 7)
+
+model = arima(a, order=c(1,0,1), seasonal = c(1,0,1))
+
+forecast = predict(model, n.ahead = 2)$pred
+forecast = as.numeric(forecast)
+
+
+forecastPeriod = seq.Date(from = lastDay + days(1), to = lastDay + days(2), by = "day")
+forecastPeriod = data.table(Date = forecastPeriod)
+
+forecastPeriod[, Result:=0]
+
+forecastPeriod[Date == lastDay + days(1), Result:=dailycons[Date== lastDay - days(6), DailyConsumption] + forecast[1]]
+forecastPeriod[Date == lastDay + days(2), Result:=dailycons[Date== lastDay - days(5), DailyConsumption] + forecast[2]]
+
+hourlyForecasts = forecastPeriod[Date == lastDay + days(2), Result] *
+                    unlist(hourMultipliers[, 1 + wday(lastDay + days(2)), with = F], use.names = F)
+hourlyForecasts
